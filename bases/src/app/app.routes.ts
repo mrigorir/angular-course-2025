@@ -10,8 +10,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/counter/counter.component'),
   },
   {
+    path: 'dragon-ball',
+    loadComponent: () => import('./pages/dragon-ball/dragon-ball.component'),
+  },
+  {
     path: '**',
-    redirectTo: 'hero',
+    redirectTo: 'counter',
     pathMatch: 'full',
   },
 ];
