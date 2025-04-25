@@ -2,25 +2,43 @@
 <hr />
 <section class="row">
   <div class="col-12 col-sm-6">
-    <h3 class="mb-4">Agregar</h3>
-    <input type="text" class="form-control" placeholder="Nombre" />
-    <input type="text" class="form-control mt-2" placeholder="Poder" />
-    <button class="btn btn-primary mt-2">Agregar</button>
+    <h3 class="mb-4">Agregar:</h3>
+    <h4>Nombre: {{ name() }} - Poder: {{ power() }}</h4>
+    <input
+      placeholder="Nombre"
+      class="form-control"
+      type="text"
+      #txtName
+      [value]="name()"
+      (input)="name.set(txtName.value)"
+    />
+    <input
+      class="form-control mt-2"
+      placeholder="Poder"
+      type="number"
+      #txtPower
+      [value]="power()"
+      (input)="power.set(+txtPower.value)"
+    />
+    <button class="btn btn-primary mt-2" (click)="addCharacter()">Agregar</button>
   </div>
 
   <div class="col-12 col-sm-6">
     <h3>Listado</h3>
-    <ol>
-      Goku
-    </ol>
-    <ol>
-      Goku
-    </ol>
-    <ol>
-      Goku
-    </ol>
-    <ol>
-      Goku
-    </ol>
+    <ul>
+      @for (char of characters(); track char.id; let idx = $index) { @if
+      (char.power > 500 ) {
+      <li>
+        <span>{{ idx + 1 }} - {{ char.name }}</span>
+        <strong [class.text-danger]="char.power >= 9000">
+          ( {{ char.power }} )</strong
+        >
+      </li>
+      } @else {
+      <li>
+        <strong> Nada que mostrar </strong>
+      </li>
+      } }
+    </ul>
   </div>
 </section>
