@@ -1,1 +1,17 @@
-<p>dragon-ball-super works!</p>,
+<h1>Dragon Ball Page</h1>
+<hr />
+<section class="row">
+  <div class="col-12 col-sm-6">
+    <dragon-ball-add-character
+      [characters]="characters()"
+      (onAddNewCharacter)="addNewCharacter($event)"
+    />
+  </div>
+
+  <div class="col-12 col-sm-6">
+    <dragon-ball-character-list
+      listName="Listado de personajes"
+      [characters]="characters()"
+    />
+  </div>
+</section>

@@ -4,4 +4,9 @@ export const characters = [
     name: 'Goku',
     power: 9000,
   },
+  {
+    id: 2,
+    name: 'Trunks',
+    power: 6000,
+  },
 ];

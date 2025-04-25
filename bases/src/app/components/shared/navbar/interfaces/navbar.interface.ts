@@ -16,4 +16,8 @@ export const navbarItems = [
     title: 'Dragon Ball',
     url: 'dragon-ball',
   },
+  {
+    title: 'Dragon Ball Súper',
+    url: 'dragon-ball-super',
+  },
 ];

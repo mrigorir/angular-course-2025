@@ -1,0 +1,23 @@
+<h3 class="mb-4">Agregar:</h3>
+
+<h4>Nombre: {{ name() }} - Poder: {{ power() }}</h4>
+
+<input
+  placeholder="Nombre"
+  class="form-control"
+  type="text"
+  #txtName
+  [value]="name()"
+  (input)="name.set(txtName.value)"
+/>
+<input
+  class="form-control mt-2"
+  placeholder="Poder"
+  type="number"
+  #txtPower
+  [value]="power()"
+  (input)="power.set(+txtPower.value)"
+/>
+<button class="btn btn-primary mt-2" (click)="addCharacter()">
+  Agregar
+</button>

@@ -1,22 +1,26 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  input,
+  output,
   signal,
   type OnInit,
 } from '@angular/core';
 
-import { Character } from '../../interfaces/characters.interfaces';
-import { characters } from './interfaces/character.interface';
+import { Character } from '../../../interfaces/characters.interfaces';
 
 @Component({
-  selector: 'dragon-ball',
+  selector: 'dragon-ball-add-character',
   imports: [],
-  templateUrl: './dragon-ball.component.html',
-  styleUrl: './dragon-ball.component.css',
+  templateUrl: './dragon-ball-add-character.component.html',
+  styleUrl: './dragon-ball-add-character.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class DragonBallComponent implements OnInit {
-  characters = signal<Character[]>(characters);
+export class DragonBallAddCharacterComponent implements OnInit {
+  characters = input.required<Character[]>();
+
+  onAddNewCharacter = output<Character>();
+
   name = signal<string>('Ingresa un nombre');
   power = signal<number>(0);
 
@@ -30,8 +34,9 @@ export default class DragonBallComponent implements OnInit {
       power: this.power(),
       name: this.name(),
     };
-    // this.characters().push(newCharacter); --> No recomendado
-    this.characters.update((list) => [...list, newCharacter]); // recomendado
+
+    this.onAddNewCharacter.emit(newCharacter);
+
     this.resetFields();
   }
 
