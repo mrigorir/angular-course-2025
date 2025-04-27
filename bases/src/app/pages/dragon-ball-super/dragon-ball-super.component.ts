@@ -22,15 +22,7 @@ import { CharacterListComponent } from '../../components/dragon-ball/character-l
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class DragonBallSuperComponent implements OnInit {
-  private dragonBallService = inject(DragonBallService);
-
-  characters = signal<Character[]>(characters);
+  public dragonBallService = inject(DragonBallService);
 
   ngOnInit(): void {}
-
-
-  addNewCharacter(newCharacter: Character) {
-    // this.characters().push(newCharacter); --> No recomendado
-    this.characters.update((list) => [...list, newCharacter]); // recomendado
-  }
 }
