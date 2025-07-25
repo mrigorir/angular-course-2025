@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { GifsListComponent } from './gifs-list/gifs-list.component';
+
 @Component({
   selector: 'app-trending',
-  imports: [],
+  imports: [GifsListComponent],
   templateUrl: './trending.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
