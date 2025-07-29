@@ -17,7 +17,6 @@ export class GifsService {
 
   private readonly apiKey = environment.giphyApiKey;
   private readonly baseUrl = environment.giphySite;
-
   private readonly MAX_GIFS_LIMIT = '20';
 
   private searchHistory = signal<Record<string, Gif[]>>({});
@@ -52,5 +51,9 @@ export class GifsService {
           }));
         })
       );
+  }
+
+  getHistoryGifs(query: string): Gif[] {
+    return this.searchHistory()[query] ?? [];
   }
 }
