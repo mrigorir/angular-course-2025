@@ -23,4 +23,13 @@ export class GifsService {
 
     return this.http.get<GiphyResponse>(`${this.baseUrl}/trending`, { params });
   }
+
+  searchGifs(query: string):Observable<GiphyResponse>  {
+     const params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('limit', this.MAX_GIFS_LIMIT)
+      .set('q', query);
+
+    return this.http.get<GiphyResponse>(`${this.baseUrl}/search`, {params})
+  }
 }
