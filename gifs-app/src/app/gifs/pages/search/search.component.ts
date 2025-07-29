@@ -7,9 +7,8 @@ import {
 
 import { GifsService } from '../../services/gifs.service';
 
-import { GifMapper } from '../../mapper/gifs.mapper';
-
 import { GifsListComponent } from '../trending/gifs-list/gifs-list.component';
+
 import { Gif } from '../../interfaces/gif.interface';
 
 @Component({
@@ -20,9 +19,7 @@ import { Gif } from '../../interfaces/gif.interface';
 })
 export default class SearchComponent {
   private gifService = inject(GifsService);
-
-  private gifMapper = signal(GifMapper);
-
+  
   loadGifs = signal<boolean>(true);
   gifs = signal<Gif[]>([]);
 

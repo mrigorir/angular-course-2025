@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 
 import type { GiphyResponse } from '../interfaces/giphy.interface';
 
 import { environment } from '@environments/environment';
 
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { GifMapper } from '../mapper/gifs.mapper';
 import { Gif } from '../interfaces/gif.interface';
 
@@ -14,9 +14,15 @@ import { Gif } from '../interfaces/gif.interface';
 })
 export class GifsService {
   private http = inject(HttpClient);
+
   private readonly apiKey = environment.giphyApiKey;
   private readonly baseUrl = environment.giphySite;
+
   private readonly MAX_GIFS_LIMIT = '20';
+
+  private searchHistory = signal<Record<string, Gif[]>>({});
+
+  public searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
 
   laodTrendingGifs(): Observable<GiphyResponse> {
     const params = new HttpParams()
@@ -35,9 +41,16 @@ export class GifsService {
     return this.http
       .get<GiphyResponse>(`${this.baseUrl}/search`, { params })
       .pipe(
-        map(({ data }) => GifMapper.mapGiphyItemsToGifArray(data))
-        // Esto de arriba es lo mismo que:
+        // Esto de abajo es lo mismo que:
         // map((response) => GifMapper.mapGiphyItemsToGifArray(response.data))
+        map(({ data }) => GifMapper.mapGiphyItemsToGifArray(data)),
+        // Historial
+        tap((items) => {
+          this.searchHistory.update((currentHistory) => ({
+            ...currentHistory,
+            [query.toLocaleLowerCase()]: items,
+          }));
+        })
       );
   }
 }
