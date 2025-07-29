@@ -5,7 +5,9 @@ import type { GiphyResponse } from '../interfaces/giphy.interface';
 
 import { environment } from '@environments/environment';
 
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { GifMapper } from '../mapper/gifs.mapper';
+import { Gif } from '../interfaces/gif.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +26,18 @@ export class GifsService {
     return this.http.get<GiphyResponse>(`${this.baseUrl}/trending`, { params });
   }
 
-  searchGifs(query: string):Observable<GiphyResponse>  {
-     const params = new HttpParams()
+  searchGifs(query: string): Observable<Gif[]> {
+    const params = new HttpParams()
       .set('api_key', this.apiKey)
       .set('limit', this.MAX_GIFS_LIMIT)
       .set('q', query);
 
-    return this.http.get<GiphyResponse>(`${this.baseUrl}/search`, {params})
+    return this.http
+      .get<GiphyResponse>(`${this.baseUrl}/search`, { params })
+      .pipe(
+        map(({ data }) => GifMapper.mapGiphyItemsToGifArray(data))
+        // Esto de arriba es lo mismo que:
+        // map((response) => GifMapper.mapGiphyItemsToGifArray(response.data))
+      );
   }
 }
