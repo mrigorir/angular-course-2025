@@ -10,15 +10,16 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class GifsServiceService {
+export class GifsService {
   private http = inject(HttpClient);
   private readonly apiKey = environment.giphyApiKey;
   private readonly baseUrl = environment.giphySite;
+  private readonly MAX_GIFS_LIMIT = '20';
 
-  laodTrendingGifgs(): Observable<GiphyResponse> {
+  laodTrendingGifs(): Observable<GiphyResponse> {
     const params = new HttpParams()
       .set('api_key', this.apiKey)
-      .set('limit', '10');
+      .set('limit', this.MAX_GIFS_LIMIT);
 
     return this.http.get<GiphyResponse>(`${this.baseUrl}/trending`, { params });
   }
