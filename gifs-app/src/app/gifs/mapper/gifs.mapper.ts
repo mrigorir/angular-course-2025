@@ -3,12 +3,13 @@ import { Gif } from '../interfaces/gif.interface';
 
 export class GifMapper {
   static mapGiphyItemToGif(item: GiphyItem): Gif {
-    const { id, title, url } = item;
-
+    const { id, title } = item;
+    const { url } = item.images.original
+    
     return {
       id,
       title,
-      url,
+      url
     };
   }
 

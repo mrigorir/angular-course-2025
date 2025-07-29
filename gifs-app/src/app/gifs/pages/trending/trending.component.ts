@@ -25,14 +25,15 @@ export default class TrendingComponent implements OnInit {
   private gifService = inject(GifsService);
 
   private gifMapper = signal(GifMapper);
-  private gifs = signal<Gif[]>([]);
 
   gifsPrevImages = signal<string[]>(imageUrls);
+  loadGifs = signal<boolean>(true);
+  gifs = signal<Gif[]>([]);
 
   ngOnInit(): void {
     this.gifService.laodTrendingGifs().subscribe((response) => {
       this.gifs.set(this.mappedGifs(response.data));
-      console.log(this.gifs())
+      this.loadGifs.set(false);
     });
   }
 
