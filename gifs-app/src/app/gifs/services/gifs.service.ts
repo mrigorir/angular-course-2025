@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 
 import type { GiphyResponse } from '../interfaces/giphy.interface';
 
@@ -9,21 +9,41 @@ import { map, Observable, tap } from 'rxjs';
 import { GifMapper } from '../mapper/gifs.mapper';
 import { Gif } from '../interfaces/gif.interface';
 
+const GIF_KEY = 'gifs';
+
+const loadFromLocalStorage = () => {
+  try {
+    const gifsFromLocalStorage = localStorage.getItem(GIF_KEY);
+    return gifsFromLocalStorage ? JSON.parse(gifsFromLocalStorage) : {};
+  } catch {
+    return {};
+  }
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class GifsService {
   private http = inject(HttpClient);
 
+  constructor() {
+    loadFromLocalStorage();
+  }
+
   private readonly apiKey = environment.giphyApiKey;
   private readonly baseUrl = environment.giphySite;
   private readonly MAX_GIFS_LIMIT = '20';
 
-  private searchHistory = signal<Record<string, Gif[]>>({});
+  private searchHistory = signal<Record<string, Gif[]>>(loadFromLocalStorage());
 
   public searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
 
-  laodTrendingGifs(): Observable<GiphyResponse> {
+  private saveGifsToLocalStorage = effect(() => {
+    const historyString = JSON.stringify(this.searchHistory());
+    localStorage.setItem(GIF_KEY, historyString);
+  });
+
+  loadTrendingGifs(): Observable<GiphyResponse> {
     const params = new HttpParams()
       .set('api_key', this.apiKey)
       .set('limit', this.MAX_GIFS_LIMIT);
