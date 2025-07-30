@@ -24,13 +24,13 @@ import { GifMapper } from '../../mapper/gifs.mapper';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class TrendingComponent implements OnInit {
-  scrollDiv = viewChild<ElementRef>('scrollDiv');
+  scrollDiv = viewChild.required<ElementRef<HTMLElement>>('scrollDiv');
 
   private gifService = inject(GifsService);
   private gifMapper = signal(GifMapper);
 
   public gifsPrevImages = signal<string[]>(imageUrls);
-  public loadGifs = signal<boolean>(true);
+  public loadGifs = signal<boolean>(false);
   public trendingGifs = signal<Gif[]>([]);
 
   // public trendingGifGroup = computed<Gif[][]>(() => {
@@ -53,15 +53,29 @@ export default class TrendingComponent implements OnInit {
   }
 
   onScroll(e: Event) {
-    console.log('Alo')
-    const scrollDiv = this.scrollDiv()?.nativeElement;
-    console.log(scrollDiv)
+    const element = this.scrollDiv()?.nativeElement;
+    if (!element) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = element;
+    const isAtBottom = scrollTop + clientHeight + 300 >= scrollHeight;
+
+    if (isAtBottom && !this.loadGifs()) {
+      this.getTrendingGifs();
+    }
+  }
+  getTrendingGifs() {
+    if (this.loadGifs()) return;
+
+    this.loadGifs.set(true);
+
+    this.gifService.loadTrendingGifs().subscribe((response) => {
+      const gifs = this.mappedGifs(response.data);
+      this.trendingGifs.update((currentGifs) => [...currentGifs, ...gifs]);
+      this.loadGifs.set(false);
+    });
   }
 
   ngOnInit(): void {
-    this.gifService.loadTrendingGifs().subscribe((response) => {
-      this.trendingGifs.set(this.mappedGifs(response.data));
-      this.loadGifs.set(false);
-    });
+    this.getTrendingGifs();
   }
 }

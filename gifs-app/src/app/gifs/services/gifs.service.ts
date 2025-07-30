@@ -18,7 +18,7 @@ const loadFromLocalStorage = () => {
   } catch {
     return {};
   }
-}
+};
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +37,7 @@ export class GifsService {
   private searchHistory = signal<Record<string, Gif[]>>(loadFromLocalStorage());
 
   public searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
+  public trendingPage = signal<number>(0);
 
   private saveGifsToLocalStorage = effect(() => {
     const historyString = JSON.stringify(this.searchHistory());
@@ -46,7 +47,12 @@ export class GifsService {
   loadTrendingGifs(): Observable<GiphyResponse> {
     const params = new HttpParams()
       .set('api_key', this.apiKey)
-      .set('limit', this.MAX_GIFS_LIMIT);
+      .set('limit', this.MAX_GIFS_LIMIT)
+      .set('offset', this.trendingPage() * 20);
+
+    this.trendingPage.update((currentPage) => currentPage + 1);
+
+    console.log(this.trendingPage());
 
     return this.http.get<GiphyResponse>(`${this.baseUrl}/trending`, { params });
   }
