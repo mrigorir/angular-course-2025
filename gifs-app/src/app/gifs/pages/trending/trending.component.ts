@@ -2,9 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   OnInit,
   signal,
+  viewChild,
 } from '@angular/core';
 
 import { GifsService } from '../../services/gifs.service';
@@ -15,15 +17,15 @@ import { Gif } from '../../interfaces/gif.interface';
 import { imageUrls } from './consts/gifs-list-images';
 import { GifMapper } from '../../mapper/gifs.mapper';
 
-import { GifsListComponent } from './gifs-list/gifs-list.component';
-
 @Component({
   selector: 'app-trending',
-  imports: [GifsListComponent],
+  imports: [],
   templateUrl: './trending.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class TrendingComponent implements OnInit {
+  scrollDiv = viewChild<ElementRef>('scrollDiv');
+
   private gifService = inject(GifsService);
   private gifMapper = signal(GifMapper);
 
@@ -48,6 +50,12 @@ export default class TrendingComponent implements OnInit {
 
   private mappedGifs(data: GiphyItem[]) {
     return this.gifMapper().mapGiphyItemsToGifArray(data);
+  }
+
+  onScroll(e: Event) {
+    console.log('Alo')
+    const scrollDiv = this.scrollDiv()?.nativeElement;
+    console.log(scrollDiv)
   }
 
   ngOnInit(): void {
