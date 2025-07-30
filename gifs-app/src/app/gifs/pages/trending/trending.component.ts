@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -9,6 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 
+import { ScrollStateService } from 'src/app/shared/services/scroll-state.service';
 import { GifsService } from '../../services/gifs.service';
 
 import { GiphyItem } from '../../interfaces/giphy.interface';
@@ -23,10 +25,12 @@ import { GifMapper } from '../../mapper/gifs.mapper';
   templateUrl: './trending.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class TrendingComponent implements OnInit {
+export default class TrendingComponent implements OnInit, AfterViewInit {
   scrollDiv = viewChild.required<ElementRef<HTMLElement>>('scrollDiv');
 
+  private scrollStateService = inject(ScrollStateService);
   private gifService = inject(GifsService);
+
   private gifMapper = signal(GifMapper);
 
   public gifsPrevImages = signal<string[]>(imageUrls);
@@ -52,12 +56,13 @@ export default class TrendingComponent implements OnInit {
     return this.gifMapper().mapGiphyItemsToGifArray(data);
   }
 
-  onScroll(e: Event) {
+  onScroll() {
     const element = this.scrollDiv()?.nativeElement;
     if (!element) return;
 
     const { scrollTop, scrollHeight, clientHeight } = element;
     const isAtBottom = scrollTop + clientHeight + 300 >= scrollHeight;
+    this.scrollStateService.trendingScrollState.set(scrollTop);
 
     if (isAtBottom && !this.loadGifs()) {
       this.getTrendingGifs();
@@ -73,6 +78,13 @@ export default class TrendingComponent implements OnInit {
       this.trendingGifs.update((currentGifs) => [...currentGifs, ...gifs]);
       this.loadGifs.set(false);
     });
+  }
+
+  ngAfterViewInit(): void {
+    const element = this.scrollDiv()?.nativeElement;
+    if (!element) return;
+
+    element.scrollTop = this.scrollStateService.trendingScrollState();
   }
 
   ngOnInit(): void {
