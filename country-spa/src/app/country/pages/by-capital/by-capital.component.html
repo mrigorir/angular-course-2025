@@ -1,5 +1,6 @@
-<country-search-input (onEmitInputSearch)="onSearch($event)" />
+<search-input
+  (inputSearch)="onSearch($event)"
+  [placeholder]="'Buscar por capital'"
+/>
 
 <country-list />
-
-

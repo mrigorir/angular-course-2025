@@ -3,7 +3,7 @@
     type="text"
     class="input input-bordered mr-2 w-56"
     autofocus="autofocus"
-    placeholder="Buscar por capital"
+    [placeholder]="placeholder()"
     #inputSearch
     (keyup.enter)="onSearch(inputSearch.value)"
   />
