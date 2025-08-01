@@ -1,9 +1,14 @@
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
+import { TopMenuComponent } from '../../components/top-menu/top-menu.component';
 
 @Component({
   selector: 'country-layout',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, TopMenuComponent, CommonModule],
   templateUrl: './country-layout.component.html',
 })
-export default class CountryLayoutComponent { }
+export default class CountryLayoutComponent {
+
+}

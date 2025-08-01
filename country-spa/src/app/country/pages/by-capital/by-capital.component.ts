@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './by-capital.component.html',
 })
-export default class ByCapitalComponent { }
+export default class ByCapitalComponent {
+  onSearch(value: string) {}
+}
