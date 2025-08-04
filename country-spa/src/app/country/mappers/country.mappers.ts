@@ -5,12 +5,12 @@ export class CountryMapper {
   static mapRestCountriesToCountry(country: RestCountries): Country {
     const { population, capital, cca2, flag } = country;
     const { svg } = country.flags;
-    const { common } = country.name;
+    const { official } = country.translations["spa"] ?? 'No spanish name';
 
     return {
       population,
       flagSvg: svg,
-      name: common,
+      name: official,
       capital,
       cca2,
       flag,
