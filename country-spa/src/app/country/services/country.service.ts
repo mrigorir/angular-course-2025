@@ -45,4 +45,18 @@ export class CountryService {
         })
       );
   }
+
+   searchByCountryByAlphaCode(code: string) {
+
+    return this.http
+      .get<RestCountries[]>(`${this.base_url}/alpha/${code}`)
+      .pipe(
+        map((resp) => CountryMapper.mapRestCountriesArrayToCountryArray(resp)),
+        map(countries => countries.at(0)),
+        catchError((error) => {
+          console.error('Error: ', error);
+          return throwError(() => new Error(`Country not found by code: ${code}`, error));
+        })
+      );
+  }
 }

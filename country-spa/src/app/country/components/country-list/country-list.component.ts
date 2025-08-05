@@ -11,4 +11,8 @@ import { Country } from '../../interfaces/country.interface';
 })
 export class CountryListComponent {
   countries = input.required<Country[]>();
+
+  errorMessage = input<string | undefined | null | unknown>();
+  isLoading = input<boolean>();
+  isEmpty = input<boolean>();
 }

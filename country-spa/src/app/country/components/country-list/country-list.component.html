@@ -4,7 +4,7 @@
       <tr>
         <th>#</th>
         <th>Ícono</th>
-        <th>Bnadera</th>
+        <th>Bandera</th>
         <th>Nombre</th>
         <th>Capital</th>
         <th>Población</th>
@@ -12,8 +12,21 @@
       </tr>
     </thead>
     <tbody>
-      @defer { @for (country of countries(); track country.cca2; let index =
-      $index) {
+      @if (isLoading()) {
+      <tr>
+        <td colspan="7" class="text-center">
+          <span class="loading loading-spinner loading-lg"></span>
+          Buscando países...
+        </td>
+      </tr>
+      } @else if (errorMessage()) {
+      <tr>
+        <td colspan="7" class="text-center text-red-800">
+          {{ errorMessage() }}
+        </td>
+      </tr>
+      } @else { @defer { @for (country of countries(); track country.cca2; let
+      index = $index) {
       <tr>
         <td>{{ index + 1 }}</td>
         <td>{{ country.flag }}</td>
@@ -24,13 +37,16 @@
         <td>{{ country.capital }}</td>
         <td class="badge badge-secondary">{{ country.population | number }}</td>
         <td>
-          <a [routerLink]="['/country/by', country.cca2]" class="link-primary"
-            >Más información</a
-          >
+          <a [routerLink]="['/country/by', country.cca2]" class="link-primary">
+            Más información
+          </a>
         </td>
       </tr>
-      } }
-      <tr></tr>
+      } @empty {
+      <tr>
+        <td colspan="7" class="text-center">No se encontraron países</td>
+      </tr>
+      } } }
     </tbody>
   </table>
 </section>

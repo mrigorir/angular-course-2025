@@ -1,1 +1,15 @@
-<p>country works!</p>,
+@if (countryResource.error()) {
+  <section class=" flex flex-col items-center justify-center mt-10">
+    <h1>No se encontró el país</h1>
+    <a href="link-primary">Regrear</a>
+  </section>
+}
+
+<h1 class="mt-5">Country code: {{ countryCode }}</h1>
+
+<hr class="my-5">
+
+@if (countryResource.value(); as country) {
+  <h3>Nombre: {{ country.name }}</h3>
+
+}
