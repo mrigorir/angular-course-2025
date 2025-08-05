@@ -3,4 +3,10 @@
   [placeholder]="'Buscar por capital'"
 />
 
-<country-list [countries]="countries()" [isError]="isError()" />
+@if (countryResource.hasValue()) {
+  <country-list [countries]="countryResource.value()" />
+}
+
+@if (countryResource.error()) {
+  <h3>{{ countryResource.error() }}</h3>
+}
