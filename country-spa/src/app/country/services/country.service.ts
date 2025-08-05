@@ -26,7 +26,21 @@ export class CountryService {
       .pipe(
         map((resp) => CountryMapper.mapRestCountriesArrayToCountryArray(resp)),
         catchError((error) => {
-          console.error('Error: ', error)
+          console.error('Error: ', error);
+          return throwError(() => new Error('Capital not found. ', error));
+        })
+      );
+  }
+
+  searchByCountry(query: string): Observable<Country[]> {
+    query = query.toLocaleLowerCase();
+
+    return this.http
+      .get<RestCountries[]>(`${this.base_url}/name/${query}`)
+      .pipe(
+        map((resp) => CountryMapper.mapRestCountriesArrayToCountryArray(resp)),
+        catchError((error) => {
+          console.error('Error: ', error);
           return throwError(() => new Error('Country not found. ', error));
         })
       );
