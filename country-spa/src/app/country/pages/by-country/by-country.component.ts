@@ -2,8 +2,9 @@ import { Component, inject, resource, signal } from '@angular/core';
 
 import { CountrySearchInputComponent } from '../../components/country-search-input/country-search-input.component';
 import { CountryListComponent } from '../../components/country-list/country-list.component';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { CountryService } from '../../services/country.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'by-country',
@@ -15,18 +16,30 @@ export default class ByCountryComponent {
 
   query = signal<string>('');
 
-  countryResource = resource({
-    request: () => ({ query: this.query() }),
-    loader: async ({ request }) => {
-      if (!request.query) return [];
-
-      return await firstValueFrom(
-        this.countryService.searchByCountry(request.query)
-      );
-    },
-  });
-
   onSearch(value: string) {
     this.query.set(value);
   }
+
+  // Search using rxResource (Observables)
+  countryResource = rxResource({
+    request: () => ({ query: this.query() }),
+    loader: ({ request }) => {
+      if (!request.query) return of([]);
+
+      return this.countryService.searchByCountry(request.query);
+    },
+  });
+
+  // Search using Resources (Promises)
+
+  // countryResource = resource({
+  //   request: () => ({ query: this.query() }),
+  //   loader: async ({ request }) => {
+  //     if (!request.query) return [];
+
+  //     return await firstValueFrom(
+  //       this.countryService.searchByCountry(request.query)
+  //     );
+  //   },
+  // });
 }

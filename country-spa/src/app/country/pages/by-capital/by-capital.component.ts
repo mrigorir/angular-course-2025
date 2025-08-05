@@ -1,12 +1,13 @@
 import { Component, inject, resource, signal } from '@angular/core';
 
+import { rxResource } from '@angular/core/rxjs-interop';
+
 import { CountryService } from '../../services/country.service';
 
-import { Country } from '../../interfaces/country.interface';
+import { firstValueFrom, of } from 'rxjs';
 
 import { CountrySearchInputComponent } from '../../components/country-search-input/country-search-input.component';
 import { CountryListComponent } from '../../components/country-list/country-list.component';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'by-capital',
@@ -18,20 +19,34 @@ export default class ByCapitalComponent {
 
   query = signal<string>('');
 
-  countryResource = resource({
-    request: () => ({ query: this.query() }),
-    loader: async ({ request }) => {
-      if (!request.query) return [];
-
-      return await firstValueFrom(
-        this.countryService.searchByCapital(request.query)
-      );
-    },
-  });
-
   onSearch(value: string) {
     this.query.set(value);
   }
+
+  // Search using rxResource (Observables)
+  countryResource = rxResource({
+    request: () => ({ query: this.query() }),
+    loader: ({ request }) => {
+      if (!request.query) return of([]);
+
+      return this.countryService.searchByCapital(request.query);
+    },
+  });
+
+  // Search using Resources (Promises)
+
+  // countryResource = resource({
+  //   request: () => ({ query: this.query() }),
+  //   loader: async ({ request }) => {
+  //     if (!request.query) return [];
+
+  //     return await firstValueFrom(
+  //       this.countryService.searchByCapital(request.query)
+  //     );
+  //   },
+  // });
+
+  // Search using traditional methods
 
   // countries = signal<Country[]>([]);
   // isLoading = signal<boolean>(false);
