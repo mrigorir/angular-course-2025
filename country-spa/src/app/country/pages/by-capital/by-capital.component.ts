@@ -20,8 +20,16 @@ export default class ByCapitalComponent {
   isError = signal<string | null>(null);
 
   onSearch(query: string) {
-    this.countryService.searchByCapital(query).subscribe((data) => {
-     this.countries.set(data);
+    this.countryService.searchByCapital(query).subscribe({
+      next: (countries) => {
+        this.isLoading.set(false);
+        this.countries.set(countries);
+      },
+      error: (err) => {
+        this.isLoading.set(false);
+        this.countries.set([]);
+        this.isError.set(`Capital not found: ${query}`);
+      }
     });
   }
 }

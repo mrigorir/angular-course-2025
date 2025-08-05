@@ -8,7 +8,7 @@ import { RestCountries } from '../interfaces/countries';
 
 import { CountryMapper } from '../mappers/country.mappers';
 
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +23,12 @@ export class CountryService {
 
     return this.http
       .get<RestCountries[]>(`${this.base_url}/capital/${query}`)
-      .pipe(map( resp => CountryMapper.mapRestCountriesArrayToCountryArray(resp)));
+      .pipe(
+        map((resp) => CountryMapper.mapRestCountriesArrayToCountryArray(resp)),
+        catchError((error) => {
+          console.error('Error: ', error)
+          return throwError(() => new Error('Country not found. ', error));
+        })
+      );
   }
 }
