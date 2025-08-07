@@ -18,6 +18,7 @@ export class CountryService {
 
   private readonly base_url = environment.api_url;
   private queryCacheCapital = new Map<string, Country[]>();
+  private queryCacheCountry = new Map<string, Country[]>();
 
   searchByCapital(query: string): Observable<Country[]> {
     query = query.toLocaleLowerCase();
@@ -41,10 +42,15 @@ export class CountryService {
   searchByCountry(query: string): Observable<Country[]> {
     query = query.toLocaleLowerCase();
 
+    if (this.queryCacheCountry.has(query)) {
+      return of(this.queryCacheCountry.get(query) ?? []);
+    }
+
     return this.http
       .get<RestCountries[]>(`${this.base_url}/name/${query}`)
       .pipe(
         map((resp) => CountryMapper.mapRestCountriesArrayToCountryArray(resp)),
+          tap((countries) => this.queryCacheCountry.set(query, countries)),
         catchError((error) => {
           console.error('Error: ', error);
           return throwError(() => new Error('Country not found. ', error));
