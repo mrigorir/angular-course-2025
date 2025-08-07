@@ -1,3 +1,16 @@
-<search-input [placeholder]="'Buscar por región'"/>
+<div class="flex">
+  @for (button of regionButtons(); track $index) {
+  <button
+    [class]=" `btn mt-10 mx-2 ${button.color}` "
+    (click)="setSelectedRegion(button.region)"
+  >
+    {{ button.region }}
+  </button>
+  }
+</div>
 
-<country-list [countries]="[]" />
+<country-list
+  [countries]="countryResource.value() ?? []"
+  [errorMessage]="countryResource.error()"
+  [isLoading]="countryResource.isLoading()"
+/>
