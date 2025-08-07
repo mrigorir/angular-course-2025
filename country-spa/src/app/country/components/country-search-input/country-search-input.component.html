@@ -6,6 +6,7 @@
     [placeholder]="placeholder()"
     #inputSearch
     (keyup.enter)="onSearch(inputSearch.value)"
+    (keyup)="inputValue.set(inputSearch.value)"
   />
 
   <button class="btn btn-primary" (click)="onSearch(inputSearch.value)">

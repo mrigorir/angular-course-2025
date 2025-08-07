@@ -5,4 +5,6 @@ export interface Country {
   cca2: string;
   flag: string;
   name: string;
+  region: string;
+  subregion: string;
 }

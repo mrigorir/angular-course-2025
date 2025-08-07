@@ -3,7 +3,7 @@ import type { RestCountries } from '../interfaces/countries';
 
 export class CountryMapper {
   static mapRestCountriesToCountry(country: RestCountries): Country {
-    const { population, capital, cca2, flag } = country;
+    const { population, capital, cca2, flag, region, subregion } = country;
     const { svg } = country.flags;
     const { official } = country.translations["spa"] ?? 'No spanish name';
 
@@ -14,6 +14,8 @@ export class CountryMapper {
       capital,
       cca2,
       flag,
+      region,
+      subregion
     };
   }
 
