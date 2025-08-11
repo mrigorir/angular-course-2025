@@ -3,7 +3,7 @@
   <h1 class="text-xl font-thin">Pipes incluidos en Angular</h1>
 </section>
 
-<div class="stats shadow">
+<div class="stats shadow w-full">
   <div class="stat place-items-center">
     <div class="stat-title">Lowercase Pipe</div>
     <div class="stat-value">{{ nameUpper() | lowercase }}</div>
@@ -20,5 +20,31 @@
     <div class="stat-title">TitlCase Pipe</div>
     <div class="stat-value">{{ fullName() | titlecase }}</div>
     <div class="stat-desc">{{ fullName() }}</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="stats shadow w-full">
+  <div class="stat place-items-center">
+    <div class="stat-title">Date Pipe</div>
+    <div class="stat-value">{{ customDate() | date }}</div>
+    <div class="stat-desc">{{ customDate() }}</div>
+  </div>
+
+  <div class="stat place-items-center">
+    <div class="stat-title">Date | long | GMT-6</div>
+    <div class="stat-value text-secondary">
+      {{ customDate() | date : "long" : "GMT-6" }}
+    </div>
+    <div class="stat-desc text-secondary">{{ customDate() }}</div>
+  </div>
+
+  <div class="stat place-items-center">
+    <div class="stat-title">Date | short | GMT-3</div>
+    <div class="stat-value text-secondary">
+      {{ customDate() | date : "short" : "GMT-4" }}
+    </div>
+    <div class="stat-desc text-secondary">{{ customDate() }}</div>
   </div>
 </div>
