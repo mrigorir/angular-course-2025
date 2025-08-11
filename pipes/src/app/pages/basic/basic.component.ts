@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
+  inject,
   signal,
 } from '@angular/core';
 import {
@@ -11,6 +12,10 @@ import {
   UpperCasePipe,
 } from '@angular/common';
 
+import { LocaleService } from '../../services/locale.service';
+
+import { currentLocale } from '../../interfaces/locales.interface';
+
 @Component({
   selector: 'basic',
   imports: [LowerCasePipe, UpperCasePipe, TitleCasePipe, DatePipe],
@@ -18,6 +23,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class BasicComponent {
+  localeService  = inject(LocaleService);
+
   nameLower = signal<string>('marco');
   nameUpper = signal<string>('MARCO');
   fullName = signal<string>('mArCo PArrA');
@@ -33,4 +40,8 @@ export default class BasicComponent {
       clearInterval(interval);
     })
   });
+
+  changeLocale(locale: currentLocale) {
+    this.localeService.changeLocale(locale);
+  }
 }
