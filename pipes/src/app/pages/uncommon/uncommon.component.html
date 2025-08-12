@@ -25,4 +25,12 @@
       Borrar cliente
     </button>
   </card>
+  <card title="SlicePipe">
+    <b>Original</b>
+    <p class="text-primary">
+      {{ clients().join(", ") }}
+    </p>
+    <b>Slice:0:2</b>
+    <p class="text-primary">{{ clients() | slice : 0:2 }}</p>
+  </card>
 </div>
