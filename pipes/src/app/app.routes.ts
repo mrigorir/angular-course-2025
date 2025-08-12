@@ -12,7 +12,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/numbers/numbers.component'),
   },
   {
-    path: 'uncommon',
+    path: 'uncommonnn',
     title: 'Pipes no tan comunes',
     loadComponent: () => import('./pages/uncommon/uncommon.component'),
   },
