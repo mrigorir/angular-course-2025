@@ -1,8 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-
-
 
 @Component({
   selector: 'basic',
@@ -14,9 +18,9 @@ export default class BasicComponent {
   private fb = inject(FormBuilder);
 
   basicForm: FormGroup = this.fb.group({
-    price: [''],
-    product: [0],
-    inStorage: [0]
+    price: ['', [Validators.required, Validators.minLength(3)]],
+    product: [0, [Validators.required, Validators.min(10)]],
+    inStorage: [0, [Validators.required, Validators.min(0)]],
   });
 
   get basicFormValues() {
