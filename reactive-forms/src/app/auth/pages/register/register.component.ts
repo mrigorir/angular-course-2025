@@ -1,8 +1,10 @@
+import { JsonPipe } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'register-page',
-  imports: [],
+  imports: [JsonPipe],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
