@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col">
-    <form [formGroup]="basicForm">
+    <form [formGroup]="basicForm" (ngSubmit)="onSave()">
       <!-- Campo de producto -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Producto</label>
@@ -15,10 +15,12 @@
             formControlName="product"
           />
 
+          @if ( isValidField('product')) {
           <span class="form-text text-danger">
             <!-- Debe de ser de 3 letras -->
-            error message
+            {{ getFieldError("product") }}
           </span>
+          }
         </div>
       </div>
 
@@ -32,9 +34,12 @@
             placeholder="Precio del producto"
             formControlName="price"
           />
+
+          @if ( isValidField('price')) {
           <span class="form-text text-danger">
-            El precio debe de ser 0 o mayor
+            {{ getFieldError("price") }}
           </span>
+          }
         </div>
       </div>
 
@@ -49,9 +54,11 @@
             formControlName="inStorage"
           />
 
+          @if ( isValidField('inStorage')) {
           <span class="form-text text-danger">
-            Las existencias deben de ser 0 o mayor
+            {{ getFieldError("inStorage") }}
           </span>
+          }
         </div>
       </div>
 
@@ -81,9 +88,9 @@
     <pre>{{ basicForm.value | json }}</pre>
 
     <span>Precio</span>
-    <pre>{{ basicFormValues['price'].value| json }}</pre>
+    <pre>{{ basicFormValues["price"].value | json }}</pre>
 
     <span>Producto</span>
-    <pre>{{ basicFormValues['product'].value | json }}</pre>
+    <pre>{{ basicFormValues["product"].value | json }}</pre>
   </div>
 </div>
