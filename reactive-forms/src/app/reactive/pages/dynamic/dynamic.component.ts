@@ -6,4 +6,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './dynamic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicComponent { }
+export default class DynamicComponent { }

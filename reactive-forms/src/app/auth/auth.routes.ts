@@ -1,14 +1,12 @@
 import { Routes } from '@angular/router';
 
-import { RegisterComponent } from './pages/register/register.component';
-
 export const authRoutes: Routes = [
   {
     path: '',
     children: [
       {
         path: 'sign-up',
-        component: RegisterComponent,
+        loadComponent: () => import('./pages/register/register.component'),
       },
       {
         path: '**',

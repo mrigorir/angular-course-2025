@@ -1,27 +1,23 @@
 import { Routes } from '@angular/router';
 
-import { BasicComponent } from './pages/basic/basic.component';
-import { DynamicComponent } from './pages/dynamic/dynamic.component';
-import { SwitchesComponent } from './pages/switches/switches.component';
-
-export const authRoutes: Routes = [
+export const reactiveRoutes: Routes = [
   {
     path: '',
     children: [
       {
         path: 'basic',
         title: 'Básicos',
-        component: BasicComponent,
+        loadComponent: () => import('./pages/basic/basic.component'),
       },
       {
         path: 'dynamic',
         title: 'Dinámicos',
-        component: DynamicComponent,
+        loadComponent: () => import('./pages/dynamic/dynamic.component'),
       },
       {
         path: 'switches',
         title: 'Switches',
-        component: SwitchesComponent,
+        loadComponent: () => import('./pages/switches/switches.component'),
       },
       {
         path: '**',
