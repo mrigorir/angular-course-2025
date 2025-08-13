@@ -1,11 +1,25 @@
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 
 @Component({
   selector: 'basic',
-  imports: [JsonPipe],
+  imports: [JsonPipe, ReactiveFormsModule],
   templateUrl: './basic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class BasicComponent { }
+export default class BasicComponent {
+  private fb = inject(FormBuilder);
+
+  basicForm: FormGroup = this.fb.group({
+    price: [''],
+    product: [0],
+    inStorage: [0]
+  });
+
+  get basicFormValues() {
+    return this.basicForm.controls;
+  }
+}
