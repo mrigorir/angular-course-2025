@@ -1,0 +1,20 @@
+@media screen and (prefers-color-scheme: dark) {
+  html,
+  body {
+    background-color: #222;
+    color: whitesmoke;
+  }
+}
+
+*,
+html,
+body,
+.row,
+.container,
+[class^="col-"],
+.container-fluid {
+  letter-spacing: 2px;
+  font-size: 1rem;
+  padding: 0;
+  margin: 0;
+}
