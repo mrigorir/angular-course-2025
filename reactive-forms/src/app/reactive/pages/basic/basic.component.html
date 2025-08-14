@@ -15,10 +15,10 @@
             formControlName="product"
           />
 
-          @if ( isValidField('product')) {
+          @if ( formUtils.isValidField('product', basicForm)) {
           <span class="form-text text-danger">
             <!-- Debe de ser de 3 letras -->
-            {{ getFieldError("product") }}
+            {{ formUtils.getFieldError("product", basicForm) }}
           </span>
           }
         </div>
@@ -35,9 +35,9 @@
             formControlName="price"
           />
 
-          @if ( isValidField('price')) {
+          @if ( formUtils.isValidField('price', basicForm)) {
           <span class="form-text text-danger">
-            {{ getFieldError("price") }}
+            {{ formUtils.getFieldError("price", basicForm) }}
           </span>
           }
         </div>
@@ -54,9 +54,9 @@
             formControlName="inStorage"
           />
 
-          @if ( isValidField('inStorage')) {
+          @if ( formUtils.isValidField('inStorage', basicForm)) {
           <span class="form-text text-danger">
-            {{ getFieldError("inStorage") }}
+            {{ formUtils.getFieldError("inStorage", basicForm) }}
           </span>
           }
         </div>
