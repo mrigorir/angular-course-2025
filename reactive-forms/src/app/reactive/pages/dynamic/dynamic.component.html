@@ -11,7 +11,11 @@
         placeholder="Nombre de la persona"
         formControlName="name"
       />
-      <span class="form-text text-danger"> error message </span>
+      @if ( formUtils.isValidField('name', dynamicForm)) {
+      <span class="form-text text-danger">
+        {{ formUtils.getFieldError("name", dynamicForm) }}
+      </span>
+      }
     </div>
   </div>
 
@@ -41,7 +45,11 @@
 
           <button class="btn btn-outline-danger" type="button">Eliminar</button>
         </div>
-        <span class="form-text text-danger"> Este campo es requerido </span>
+        @if (formUtils.isValidFieldArray(i, favoriteGames)) {
+        <span class="form-text text-danger">
+          {{ formUtils.getFieldArrayError(i, favoriteGames) }}
+        </span>
+        }
       </div>
       }
     </div>
