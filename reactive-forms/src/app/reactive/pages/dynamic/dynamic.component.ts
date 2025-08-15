@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -26,7 +27,7 @@ export default class DynamicComponent {
         ['Metal Gear', Validators.required],
         ['Death Stranding', Validators.required],
       ],
-      Validators.minLength(3)
+      Validators.minLength(2)
     ),
   });
 
@@ -34,4 +35,27 @@ export default class DynamicComponent {
     return this.dynamicForm.get('favoriteGames') as FormArray;
   }
 
+  newFavorite = new FormControl('', Validators.required);
+
+  onAddNewFavorites() {
+    if (this.newFavorite.invalid) return;
+
+    const newGame = this.newFavorite.value;
+
+    this.favoriteGames.push(this.fb.control(newGame, Validators.required));
+    this.newFavorite.reset();
+  }
+
+  onDeleteFavorite(index: number) {
+    this.favoriteGames.removeAt(index);
+  }
+
+  onSubmit() {
+    if (this.dynamicForm.invalid) {
+      this.dynamicForm.markAllAsTouched();
+      return;
+    }
+
+    this.dynamicForm.reset();
+  }
 }
