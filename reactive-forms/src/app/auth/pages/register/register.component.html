@@ -89,17 +89,15 @@
             class="form-control"
             placeholder="Confirmar la contraseña"
             formControlName="confirmPassword"
-            (input)="comparePasswords()"
           />
           @if (formUtils.isValidField('confirmPassword', registerForm)) {
           <span class="form-text text-danger">
             {{ formUtils.getFieldError("confirmPassword", registerForm) }}
           </span>
-          <br />
-          } @if (formUtils.isValidField('confirmPassword', registerForm) ||
-          !comparePasswords()) {
+          }
+            @if (registerForm.errors && registerForm.touched) {
           <span class="form-text text-danger">
-            Las contraseñas no coinciden
+          Las contraseñas no coinciden
           </span>
           }
         </div>
