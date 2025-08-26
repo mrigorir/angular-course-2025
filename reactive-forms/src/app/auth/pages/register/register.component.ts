@@ -29,6 +29,7 @@ export default class RegisterComponent {
       email: [
         '',
         [Validators.required, Validators.pattern(FormUtils.emailPattern)],
+        [this.formUtils.chekingServerResponse],
       ],
       username: [
         '',

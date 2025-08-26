@@ -1,4 +1,17 @@
-import { AbstractControl, FormArray, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  ValidationErrors,
+} from '@angular/forms';
+
+async function sleep() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 2500);
+  });
+}
 
 export class FormUtils {
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
@@ -36,13 +49,29 @@ export class FormUtils {
     return this.getTextErrors(errors);
   }
 
-   static comparePasswords(password: string, comfirmPassword: string) {
+  static comparePasswords(password: string, comfirmPassword: string) {
     return (formGroup: AbstractControl) => {
       const value1 = formGroup.get(password)?.value;
       const value2 = formGroup.get(comfirmPassword)?.value;
 
       return value1 === value2 ? null : { passwordsNotEqual: true };
     };
+  }
+
+  static async chekingServerResponse(
+    control: AbstractControl
+  ): Promise<ValidationErrors | null> {
+    await sleep();
+
+    const formValue = control.value;
+
+    if (formValue === 'hola@mundo.com') {
+      return {
+        emailTaken: true,
+      };
+    }
+
+    return null;
   }
 
   static getTextErrors(errors: ValidationErrors) {
