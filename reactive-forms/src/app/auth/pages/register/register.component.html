@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col">
-    <form autocomplete="off">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <!-- Nombre -->
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Nombre y apellido</label>
@@ -12,11 +12,14 @@
             type="text"
             class="form-control"
             placeholder="Nombre del usuario"
+            formControlName="name"
           />
 
+          @if (formUtils.isValidField('name', registerForm)) {
           <span class="form-text text-danger">
             Debe de ser en formato de nombre y apellido
           </span>
+          }
         </div>
       </div>
 
@@ -28,10 +31,13 @@
             type="email"
             class="form-control"
             placeholder="Email del usuario"
+            formControlName="email"
           />
+          @if (formUtils.isValidField('email', registerForm)) {
           <span class="form-text text-danger">
-            mensaje de error del email
+            {{ formUtils.getFieldError("email", registerForm) }}
           </span>
+          }
         </div>
       </div>
 
@@ -43,7 +49,13 @@
             type="text"
             class="form-control"
             placeholder="Nombre código del usuario"
+            formControlName="username"
           />
+          @if (formUtils.isValidField('username', registerForm)) {
+          <span class="form-text text-danger">
+            {{ formUtils.getFieldError("username", registerForm) }}
+          </span>
+          }
           <span class="form-text text-danger">
             El username no puede ser Strider
           </span>
@@ -58,11 +70,13 @@
             type="password"
             class="form-control"
             placeholder="Password de su cuenta"
+            formControlName="password"
           />
-
+          @if (formUtils.isValidField('password', registerForm)) {
           <span class="form-text text-danger">
-            La contraseña debe de ser mayor de 6 caracteres.
+            {{ formUtils.getFieldError("password", registerForm) }}
           </span>
+          }
         </div>
       </div>
 
@@ -74,11 +88,20 @@
             type="password"
             class="form-control"
             placeholder="Confirmar la contraseña"
+            formControlName="confirmPassword"
+            (input)="comparePasswords()"
           />
-
+          @if (formUtils.isValidField('confirmPassword', registerForm)) {
           <span class="form-text text-danger">
-            Las contraseñas deben de ser iguales
+            {{ formUtils.getFieldError("confirmPassword", registerForm) }}
           </span>
+          <br>
+          } @if (formUtils.isValidField('confirmPassword', registerForm) ||
+          !comparePasswords()) {
+          <span class="form-text text-danger">
+            Las contraseñas no coinciden
+          </span>
+          }
         </div>
       </div>
 
@@ -92,22 +115,26 @@
 </div>
 
 <h2>Form Valid:</h2>
+<pre>{{ registerForm.valid | json }}</pre>
 <h2>Form Status:</h2>
+<pre>{{ registerForm.status | json }}</pre>
 <h2>Form Pending:</h2>
+<pre>{{ registerForm.pending | json }}</pre>
 <h2>Form errors</h2>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ registerForm.errors | json }}</pre>
 
+<pre>{{ registerForm.value | json }}</pre>
 <h5>Nombre</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ registerFormValues["name"].value | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ registerFormValues["email"].value | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ registerFormValues["username"].value | json }}</pre>
 
 <h5>Password</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ registerFormValues["password"].value | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ registerFormValues["confirmPassword"].value | json }}</pre>

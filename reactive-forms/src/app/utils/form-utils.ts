@@ -41,8 +41,14 @@ export class FormUtils {
         case 'minlength':
           return `Mínimo de ${errors['minlength'].requiredLength} caracteres.`;
 
+        case 'maxlength':
+          return `Maximo de ${errors['maxlength'].requiredLength} caracteres.`;
+
         case 'min':
           return `Valor mínimo de ${errors['min'].min} caracteres.`;
+
+        case 'email':
+          return 'Fromato invalido';
       }
     }
 
