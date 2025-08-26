@@ -11,13 +11,13 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Nombre del usuario"
+            placeholder="Nombre y apellido"
             formControlName="name"
           />
 
           @if (formUtils.isValidField('name', registerForm)) {
           <span class="form-text text-danger">
-            Debe de ser en formato de nombre y apellido
+            {{ formUtils.getFieldError("name", registerForm) }}
           </span>
           }
         </div>
@@ -95,7 +95,7 @@
           <span class="form-text text-danger">
             {{ formUtils.getFieldError("confirmPassword", registerForm) }}
           </span>
-          <br>
+          <br />
           } @if (formUtils.isValidField('confirmPassword', registerForm) ||
           !comparePasswords()) {
           <span class="form-text text-danger">

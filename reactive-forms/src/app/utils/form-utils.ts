@@ -1,6 +1,10 @@
 import { FormArray, FormGroup, ValidationErrors } from '@angular/forms';
 
 export class FormUtils {
+  static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+
   static isValidField(fieldName: string, form: FormGroup): boolean | null {
     return (
       !!form.controls[fieldName].errors && form.controls[fieldName].touched
@@ -49,6 +53,17 @@ export class FormUtils {
 
         case 'email':
           return 'Fromato invalido';
+
+        case 'pattern':
+          if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
+            return 'el correo electrónico no es permitido';
+          }
+
+          if (errors['pattern'].requiredPattern === FormUtils.namePattern) {
+            return 'Escriba formato tipo nombre y apellido';
+          }
+
+          return 'Error de expresión regular';
       }
     }
 
