@@ -44,7 +44,7 @@
         <option value="">-- Seleccione la frontera --</option>
         @for (country of border(); track country.cca3) {
         <option [value]="country.cca3">
-          {{ country.borders }}
+          {{ country.name.common }}
         </option>
         }
       </select>
