@@ -10,6 +10,7 @@ import {
   effect,
   OnChanges,
   OnDestroy,
+  signal,
   SimpleChanges,
   type OnInit,
 } from '@angular/core';
@@ -38,6 +39,17 @@ export class HomeComponent
     AfterViewChecked,
     OnDestroy
 {
+  traditionalProperty = 'Fernando';
+  signalProperty = signal<string>('Fernando');
+
+  changeTraditional() {
+    this.traditionalProperty = 'Marco Parra';
+  }
+
+  changeSignal() {
+    this.signalProperty.set('Marco Parra');
+  }
+
   ngOnInit(): void {
     log(
       'red',
@@ -114,8 +126,11 @@ export class HomeComponent
     log('yellow', 'effect', 'Dispara efectos secundarios.');
 
     onCleanup(() => {
-      log('skyblue', 'clean up', 'Se ejecuta cuando el efecto e va a destruir.');
+      log(
+        'skyblue',
+        'clean up',
+        'Se ejecuta cuando el efecto e va a destruir.'
+      );
     });
-
   });
 }
