@@ -1,12 +1,15 @@
 import {
   AfterContentChecked,
   AfterContentInit,
+  afterNextRender,
   AfterViewChecked,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   DoCheck,
+  effect,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
   type OnInit,
 } from '@angular/core';
@@ -32,7 +35,8 @@ export class HomeComponent
     AfterContentChecked,
     AfterContentInit,
     AfterViewInit,
-    AfterViewChecked
+    AfterViewChecked,
+    OnDestroy
 {
   ngOnInit(): void {
     log(
@@ -43,11 +47,19 @@ export class HomeComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    log('blue','ngOnChanges', 'Runs every time the components inputs have changed.');
+    log(
+      'blue',
+      'ngOnChanges',
+      'Runs every time the components inputs have changed.'
+    );
   }
 
   ngDoCheck(): void {
-    log('green', 'ngDoCheck', 'Runs every time this component is checked for changes.');
+    log(
+      'green',
+      'ngDoCheck',
+      'Runs every time this component is checked for changes.'
+    );
   }
 
   ngAfterContentChecked(): void {
@@ -81,4 +93,29 @@ export class HomeComponent
       'Runs once after the components view has been initialized.'
     );
   }
+
+  ngOnDestroy(): void {
+    log(
+      '#999',
+      'ngAfterViewInit',
+      'Runs once after the components view has been initialized.'
+    );
+  }
+
+  afterNextRender = afterNextRender(() => {
+    log(
+      'brown',
+      'afternextRender',
+      'Runs once the next time that all components have been rendered to the DOM.'
+    );
+  });
+
+  basicEffect = effect((onCleanup) => {
+    log('yellow', 'effect', 'Dispara efectos secundarios.');
+
+    onCleanup(() => {
+      log('skyblue', 'clean up', 'Se ejecuta cuando el efecto e va a destruir.');
+    });
+
+  });
 }
