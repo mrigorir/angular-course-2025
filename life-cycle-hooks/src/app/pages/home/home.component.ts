@@ -40,14 +40,14 @@ export class HomeComponent
     OnDestroy
 {
   traditionalProperty = 'Fernando';
-  signalProperty = signal<string>('Fernando');
+  signalProp = signal<string>('Fernando');
 
   changeTraditional() {
     this.traditionalProperty = 'Marco Parra';
   }
 
   changeSignal() {
-    this.signalProperty.set('Marco Parra');
+    this.signalProp.set('Marco Parra');
   }
 
   ngOnInit(): void {
