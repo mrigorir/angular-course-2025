@@ -2,3 +2,15 @@
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark, forest;
 }
+
+@font-face {
+  font-family: 'montserrat';
+  src: url('/assets/fonts/montserrat-alternates/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+.montserrat {
+  font-family: 'montserrat', sans-serif;
+}
