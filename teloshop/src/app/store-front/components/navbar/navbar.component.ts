@@ -1,5 +1,6 @@
 import { Component, type OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { routes } from '../../../app.routes';
 
 @Component({
   selector: 'navbar',
@@ -7,7 +8,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
-
-
-  ngOnInit(): void {}
+  menuItems = routes.filter((item) => item.path !== '**' );
+  ngOnInit(): void {
+    console.log('menu: ', this.menuItems);
+  }
 }
