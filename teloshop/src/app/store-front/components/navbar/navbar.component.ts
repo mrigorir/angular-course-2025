@@ -10,6 +10,6 @@ import { routes } from '../../../app.routes';
 export class NavbarComponent implements OnInit {
   menuItems = routes.filter((item) => item.path !== '**' );
   ngOnInit(): void {
-    console.log('menu: ', this.menuItems);
+    console.log('menus: ', this.menuItems);
   }
 }
