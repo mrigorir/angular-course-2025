@@ -7,7 +7,6 @@ import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductComponent implements OnInit {
-
   ngOnInit(): void { }
 
 }

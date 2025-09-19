@@ -8,8 +8,5 @@ import { routes } from '../../../app.routes';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
-  menuItems = routes.filter((item) => item.path !== '**' );
-  ngOnInit(): void {
-    console.log('menus: ', this.menuItems);
-  }
+  ngOnInit(): void {}
 }
