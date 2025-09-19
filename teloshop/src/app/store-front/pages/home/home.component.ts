@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 
-import { ProductCardComponent } from "../product/components/product-card/product-card.component";
+import { ProductCardComponent } from '@/products/components/product-card/product-card.component';
+
 
 @Component({
   selector: 'home',
