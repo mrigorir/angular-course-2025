@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, inject, type OnInit } from '@angular/core';
 import { ProductCardComponent } from '@/products/components/product-card/product-card.component';
-
+import { ProductsService } from '@products/services/products.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'home',
@@ -10,7 +10,14 @@ import { ProductCardComponent } from '@/products/components/product-card/product
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class HomeComponent implements OnInit {
+  productsService = inject(ProductsService);
 
-  ngOnInit(): void { }
+  productsResource = rxResource({
+    params: () => ({}),
+    stream: () => {
+      return this.productsService.getProducts();
+    },
+  });
 
+  ngOnInit(): void {}
 }

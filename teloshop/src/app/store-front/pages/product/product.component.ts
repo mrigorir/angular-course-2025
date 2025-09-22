@@ -8,5 +8,4 @@ import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
   ngOnInit(): void { }
-
 }
