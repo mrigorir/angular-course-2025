@@ -1,19 +1,14 @@
- <div class="card bg-base-100 shadow-xl fadeIn">
-    <figure>
-      <img
-        [src]="`http://localhost:3000/api/files/product/${product().images[1]}`"
-        [alt]="product().title"
-      />
-    </figure>
-    <div class="card-body">
-      <h2 class="card-title text-accent montserrat text-lg">{{ product().title }}</h2>
-      <p>
-       {{ product().description | slice: 0 : 70 }}...
-      </p>
-      <div class="card-actions justify-end">
-        <a [routerLink]="['product', product().slug]">
-          <button class="btn btn-primary">Buy Now</button>
-        </a>
-      </div>
+<div class="card bg-base-100 shadow-xl fadeIn">
+  <figure>
+    <img [src]="product().images | productImage" [alt]="product().title" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title text-accent montserrat text-lg">{{ product().title }}</h2>
+    <p>{{ product().description | slice : 0 : 70 }}...</p>
+    <div class="card-actions justify-end">
+      <a [routerLink]="['product', product().slug]">
+        <button class="btn btn-primary">Buy Now</button>
+      </a>
     </div>
   </div>
+</div>
