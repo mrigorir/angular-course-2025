@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import { ProductsResponse } from '../interfaces/products.intertface';
+import { Product, ProductsResponse } from '../interfaces/products.intertface';
 import { Observable, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -20,8 +20,13 @@ export class ProductsService {
 
     return this.http.get<ProductsResponse>(`${this.BASE_URL}products`, {
       params,
-    }).pipe(
-      tap((data) => console.log(data))
-    );
+    });
+  }
+
+  getProductByIdSlug(idSlug: string): Observable<Product> {
+
+    return this.http
+      .get<Product>(`${this.BASE_URL}products/${idSlug}`)
+      .pipe(tap((data) => console.log(data)));
   }
 }
