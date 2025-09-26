@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 import { Product, ProductsResponse } from '../interfaces/products.intertface';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
@@ -24,9 +24,6 @@ export class ProductsService {
   }
 
   getProductByIdSlug(idSlug: string): Observable<Product> {
-
-    return this.http
-      .get<Product>(`${this.BASE_URL}products/${idSlug}`)
-      .pipe(tap((data) => console.log(data)));
+    return this.http.get<Product>(`${this.BASE_URL}products/${idSlug}`);
   }
 }

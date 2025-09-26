@@ -1,11 +1,13 @@
-import { ProductsService } from '@/products/services/products.service';
 import { ChangeDetectionStrategy, Component, inject, type OnInit } from '@angular/core';
+import { ProductsService } from '@/products/services/products.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
+import { ProductCarouselComponent } from "@/products/components/product-carousel/product-carousel.component";
+
 @Component({
   selector: 'product',
-  imports: [],
+  imports: [ProductCarouselComponent],
   templateUrl: './product.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
