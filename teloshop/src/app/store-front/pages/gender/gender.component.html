@@ -7,6 +7,7 @@
   @for (product of productsResource.value()?.products; track $index) {
   <product-card [product]="product" />
   } @empty {
-  <p>No hay producto</p>
+    <p (click)="noWayToRun(textValue.value)">No hay producto a mostrar, hijho de Adán</p>
+    <input type="button" value="all" #textValue>
   }
 </div>

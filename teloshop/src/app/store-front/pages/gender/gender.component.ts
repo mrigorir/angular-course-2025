@@ -21,7 +21,14 @@ export default class GenderComponent {
   productsResource = rxResource({
     params: () => ({ gender: this.gender() }),
     stream: () => {
-      return this.productsService.getProducts({ gender: this.gender()});
+      return this.productsService.getProducts({ gender: this.gender() });
     },
   });
+
+  noWayToRun(value: string) {
+    console.log('/*******/');
+    console.info('Value: ', value);
+    console.error('RUUUUUN');
+  }
 }
+
