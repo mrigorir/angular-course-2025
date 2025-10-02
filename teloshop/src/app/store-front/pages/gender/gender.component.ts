@@ -29,6 +29,7 @@ export default class GenderComponent {
     console.log('/*******/');
     console.info('Value: ', value);
     console.error('RUUUUUN');
+    console.log('/*******/');
   }
 }
 
