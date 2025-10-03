@@ -28,6 +28,7 @@ export default class GenderComponent {
   noWayToRun(value: string) {
     console.log('/*******/');
     console.info('Value: ', value);
+     console.log('/*******/');
     console.error('RUUUUUN');
     console.log('/*******/');
   }
